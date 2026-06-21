@@ -70,6 +70,7 @@ IdentityRiskEvents
 | where UserPrincipalName contains "smith"
 | project RiskState
 ```
+<img width="1917" height="873" alt="Screenshot 2026-06-20 201510" src="https://github.com/user-attachments/assets/9d4471da-d96c-4dc5-b141-0a06d380bd8e" />
 
 ---
 
