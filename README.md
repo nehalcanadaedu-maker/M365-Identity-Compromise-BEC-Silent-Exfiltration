@@ -1,6 +1,6 @@
 ---
 
-# M365 Identity Compromise**  
+# M365 Identity Compromise
 ---
 
 # 📌 **Q01 — The Compromised Principal**
