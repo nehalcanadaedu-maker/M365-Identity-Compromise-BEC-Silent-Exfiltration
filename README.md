@@ -65,71 +65,46 @@ The user has multiple risk detections, and aggregating them by **RiskState** wil
 
 ---
 
+
 # 📌 **Q06 — Live Exposure**
 
 ### **Objective**  
-Identify the first successful sign‑in from the attacker.
+Determine the current status of the compromised account by checking the asset record inside the incident.
 
 ### **Hypothesis**  
-The earliest successful login marks the start of the attacker’s session.
+The account status (e.g., *enabled*, *disabled*) will reveal whether the user was still active at the time of compromise, helping confirm whether the attacker operated under a valid, unblocked identity.
 
-### **Time Range**  
-`2026‑06‑11 03:00 → 2026‑06‑11 13:00 UTC`
+<img width="1912" height="872" alt="Screenshot 2026-06-20 201927" src="https://github.com/user-attachments/assets/792c3748-978c-4541-a6b8-6c7775025076" />
 
-### **Query Used**
-```kql
-SigninLogs
-| where TimeGenerated between (datetime(2026-06-11 03:00:00) .. datetime(2026-06-11 13:00:00))
-| where IPAddress == "103.69.224.136"
-| where ResultType == 0
-| order by TimeGenerated asc
-| take 1
-```
+
+---
+
+Here you go — **Q07 written cleanly in the same style as your README**, with only the **Objective** and **Hypothesis**, matching the IR Lead prompt.
 
 ---
 
 # 📌 **Q07 — How the Session Beat MFA**
 
 ### **Objective**  
-Identify how the attacker bypassed MFA.
+Identify the specific authentication field in the successful sign‑in logs that explains why MFA was not required, despite the tenant enforcing MFA.
 
 ### **Hypothesis**  
-The attacker reused a valid session token that did not require MFA re‑authentication.
+The attacker’s session was allowed because the authentication requirement was downgraded (e.g., **single‑factor authentication**) due to token reuse or a policy gap, and this value is stored as a single backend token in the sign‑in logs.
 
-### **Time Range**  
-`2026‑06‑11 03:00 → 2026‑06‑11 13:00 UTC`
-
-### **Query Used**
-```kql
-SigninLogs
-| where TimeGenerated between (datetime(2026-06-11 03:00:00) .. datetime(2026-06-11 13:00:00))
-| where IPAddress == "103.69.224.136"
-| project AuthenticationRequirement
-```
+<img width="1915" height="976" alt="Screenshot 2026-06-20 202420" src="https://github.com/user-attachments/assets/f3acbb06-f164-476a-a133-24e46b502489" />
 
 ---
 
-# 📌 **Q08 — The Control Surface That Let Them In**
+# 📌 **Q08 — The Control Surface That Let Them In**  
 
 ### **Objective**  
-Identify the app used for the first successful login.
+Identify which application allowed the attacker’s **first successful sign‑in** after multiple failed attempts from the same IP address.
 
 ### **Hypothesis**  
-The attacker targeted Outlook Web first.
+By ordering all sign‑ins from the attacker IP chronologically, the earliest **ResultType == 0** event will reveal the exact application (AppDisplayName) that granted access, exposing the control surface that enabled the compromise.
 
-### **Time Range**  
-`2026‑06‑11 03:00 → 2026‑06‑11 13:00 UTC`
+<img width="1918" height="975" alt="Screenshot 2026-06-20 204935" src="https://github.com/user-attachments/assets/4741da49-e194-49c8-9571-7c1a57e1bbce" />
 
-### **Query Used**
-```kql
-SigninLogs
-| where TimeGenerated between (datetime(2026-06-11 03:00:00) .. datetime(2026-06-11 13:00:00))
-| where IPAddress == "103.69.224.136"
-| where ResultType == 0
-| order by TimeGenerated asc
-| take 1
-| project AppDisplayName
-```
 
 ---
 
@@ -141,17 +116,7 @@ Count bad‑password failures before the first successful login.
 ### **Hypothesis**  
 The attacker attempted multiple incorrect passwords before gaining access.
 
-### **Time Range**  
-`2026‑06‑11 00:00 → 2026‑06‑11 03:00 UTC` (expanded backward)
-
-### **Query Used**
-```kql
-SigninLogs
-| where TimeGenerated between (datetime(2026-06-11 00:00:00) .. datetime(2026-06-11 03:00:00))
-| where IPAddress == "103.69.224.136"
-| where ResultType == 50126
-| count
-```
+<img width="1912" height="970" alt="Screenshot 2026-06-20 210634" src="https://github.com/user-attachments/assets/c9ac1f73-7cde-49c2-9d64-f9194cd85235" />
 
 ---
 
@@ -163,17 +128,8 @@ Count how many distinct apps the attacker accessed using the same session token.
 ### **Hypothesis**  
 The attacker pivoted across multiple M365 apps without MFA re‑prompt.
 
-### **Time Range**  
-`2026‑06‑11 03:00 → 2026‑06‑11 13:00 UTC`
+<img width="1906" height="967" alt="Screenshot 2026-06-20 211059" src="https://github.com/user-attachments/assets/7167f0f6-60b2-45fb-8188-3c1b2782aa4b" />
 
-### **Query Used**
-```kql
-SigninLogs
-| where TimeGenerated between (datetime(2026-06-11 03:00:00) .. datetime(2026-06-11 13:00:00))
-| where IPAddress == "103.69.224.136"
-| where ResultType == 0
-| summarize dcount(AppDisplayName)
-```
 
 ---
 
@@ -185,34 +141,8 @@ Identify the session identifier shared between the sign‑in and later activity.
 ### **Hypothesis**  
 A single **SessionId** GUID ties the attacker’s initial login to all subsequent activity.
 
-### **Time Range**  
-`2026‑06‑11 03:00 → 2026‑06‑11 13:00 UTC`
-
-### **Query Used — Sign‑In**
-```kql
-SigninLogs
-| where TimeGenerated between (datetime(2026-06-11 03:00:00) .. datetime(2026-06-11 13:00:00))
-| where IPAddress == "103.69.224.136"
-| where ResultType == 0
-| project TimeGenerated, AppDisplayName, SessionId
-```
-
-### **Query Used — Audit Activity**
-```kql
-AuditLogs
-| where TimeGenerated between (datetime(2026-06-11 03:00:00) .. datetime(2026-06-11 13:00:00))
-| where Identity contains "smith"
-| project TimeGenerated, OperationName, SessionId
-```
+<img width="1913" height="971" alt="Screenshot 2026-06-20 212151" src="https://github.com/user-attachments/assets/f547752f-74d5-4999-998a-804e9a85f8e9" />
 
 ---
 
-If you want, I can now generate:
 
-✔ Q12–Q20  
-✔ Full README.md  
-✔ Repo folder structure  
-✔ MITRE ATT&CK mapping  
-✔ Mermaid diagrams  
-
-Just say **continue**.
