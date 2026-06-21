@@ -38,16 +38,8 @@ Determine the OS used during the suspicious login.
 ### **Hypothesis**  
 The attacker’s OS will differ from the user’s normal baseline.
 
-### **Time Range**  
-`2026‑06‑11 03:00 → 2026‑06‑11 13:00 UTC`
+<img width="1913" height="967" alt="image" src="https://github.com/user-attachments/assets/fe344532-a698-4496-a31b-ab696a4476ed" />
 
-### **Query Used**
-```kql
-SigninLogs
-| where TimeGenerated between (datetime(2026-06-11 03:00:00) .. datetime(2026-06-11 13:00:00))
-| where IPAddress == "103.69.224.136"
-| project DeviceDetail.operatingSystem
-```
 
 ---
 
@@ -68,6 +60,8 @@ IdentityRiskEvents
 | where UserPrincipalName contains "smith"
 | project DetectionType
 ```
+<img width="1915" height="971" alt="Screenshot 2026-06-20 201234" src="https://github.com/user-attachments/assets/9dcfa434-2dc5-4744-904f-94ec0b3d1e3d" />
+
 
 ---
 
