@@ -172,7 +172,7 @@ Identify whether the attacker queried Microsoft Graph to enumerate the victim’
 ### **Hypothesis**  
 If the attacker is profiling the victim’s access level, there should be a Graph API request that lists the groups or directory roles the victim belongs to — typically via the `/me/memberOf` endpoint.
 
-<img width="1913" height="968" alt="image" src="https://github.com/user-attachments/assets/f56bfa4e-7a29-46df-b138-6a70db85153c" />
+<img width="1910" height="961" alt="image" src="https://github.com/user-attachments/assets/85d42263-07f9-40b9-b382-045d501edc6e" />
 
 
 ---
