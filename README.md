@@ -23,9 +23,6 @@ Identify the IP address associated with the suspicious login.
 ### **Hypothesis**  
 The attacker originates from a non‑trusted foreign IP.
 
-### **Time Range**  
-`2026‑06‑11 03:00 → 2026‑06‑11 13:00 UTC`
-
 <img width="1906" height="957" alt="image" src="https://github.com/user-attachments/assets/f32fd8b6-a8ac-46e2-bf64-cc7e070c0d0b" />
 
 ---
@@ -51,15 +48,6 @@ Identify the risk detection type associated with the incident.
 ### **Hypothesis**  
 The detection type will reveal why the login was flagged (e.g., unfamiliar location).
 
-### **Time Range**  
-`All available risk events`
-
-### **Query Used**
-```kql
-IdentityRiskEvents
-| where UserPrincipalName contains "smith"
-| project DetectionType
-```
 <img width="1915" height="971" alt="Screenshot 2026-06-20 201234" src="https://github.com/user-attachments/assets/9dcfa434-2dc5-4744-904f-94ec0b3d1e3d" />
 
 
