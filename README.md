@@ -43,11 +43,14 @@ The attacker’s OS will differ from the user’s normal baseline.
 # 📌 **Q04 — The Stored Detection Type**
 
 ### **Objective**  
-Identify the risk detection type associated with the incident.
+Identify the *raw backend detection type* stored in Entra ID Identity Protection telemetry for this incident.
 
 ### **Hypothesis**  
-The detection type will reveal why the login was flagged (e.g., unfamiliar location).
+The portal shows a friendly label (e.g., *Anonymous IP address*), but the underlying telemetry stores a **tokenized detection type**. Retrieving this value reveals the exact machine‑level reason the risk event was generated.
 
+---
+
+If you want, I can rewrite **Q01–Q11** in this exact clean style or continue with **Q05 next**.
 <img width="1915" height="971" alt="Screenshot 2026-06-20 201234" src="https://github.com/user-attachments/assets/9dcfa434-2dc5-4744-904f-94ec0b3d1e3d" />
 
 
@@ -56,20 +59,11 @@ The detection type will reveal why the login was flagged (e.g., unfamiliar locat
 # 📌 **Q05 — Audit the Verdict**
 
 ### **Objective**  
-Determine the risk verdict applied to the detection.
+Determine the final disposition (verdict) of all risk detections associated with the compromised user.
 
 ### **Hypothesis**  
-The risk verdict will indicate whether the system classified the login as malicious.
+The user has multiple risk detections, and aggregating them by **RiskState** will reveal the most common outcome (e.g., *atRisk*, *remediated*, *dismissed*).
 
-### **Time Range**  
-`All available risk events`
-
-### **Query Used**
-```kql
-IdentityRiskEvents
-| where UserPrincipalName contains "smith"
-| project RiskState
-```
 <img width="1917" height="873" alt="Screenshot 2026-06-20 201510" src="https://github.com/user-attachments/assets/9d4471da-d96c-4dc5-b141-0a06d380bd8e" />
 
 ---
