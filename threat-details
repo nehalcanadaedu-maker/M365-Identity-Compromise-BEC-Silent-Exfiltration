@@ -1,3 +1,6 @@
+Here is your **Threat Details** section rewritten as a **clean, professional, GitHub‑ready Markdown block**, with correct spacing, headings, and formatting for a README.
+
+You can paste this **exactly as-is** into your repo.
 
 ---
 
@@ -99,7 +102,12 @@ Aggregate, correlate — and when a trail goes cold, pivot rather than close.
 
 ---
 
+If you want, I can now:
 
+✔ Insert this into your README structure  
+✔ Add a **Threat Summary** section  
+✔ Add **MITRE ATT&CK mapping**  
+✔ Add **Case Timeline**  
 ✔ Add **Session Diagram (Mermaid)**  
 
 Just say **continue**.
