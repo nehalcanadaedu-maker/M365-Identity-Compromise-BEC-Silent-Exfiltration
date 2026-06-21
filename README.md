@@ -48,9 +48,6 @@ Identify the *raw backend detection type* stored in Entra ID Identity Protection
 ### **Hypothesis**  
 The portal shows a friendly label (e.g., *Anonymous IP address*), but the underlying telemetry stores a **tokenized detection type**. Retrieving this value reveals the exact machine‑level reason the risk event was generated.
 
----
-
-If you want, I can rewrite **Q01–Q11** in this exact clean style or continue with **Q05 next**.
 <img width="1915" height="971" alt="Screenshot 2026-06-20 201234" src="https://github.com/user-attachments/assets/9dcfa434-2dc5-4744-904f-94ec0b3d1e3d" />
 
 
