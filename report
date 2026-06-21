@@ -1,4 +1,9 @@
+Absolutely, Nehal — I’ll clean up the spacing, alignment, and consistency across all sections while keeping **your exact content, screenshots, and structure** intact.
+
+Here is the **fixed, clean, GitHub‑ready version** with proper spacing, consistent breaks, and uniform formatting.
+
 ---
+
 # 📌 **Q01 — The Compromised Principal**
 
 ### **Objective**  
@@ -164,7 +169,8 @@ Count bad‑password failures before the first successful login.
 The attacker attempted multiple incorrect passwords before gaining access.
 
 ### **Time Range**  
-`2026‑06‑11 00:00 → 2026‑06‑11 03:00 UTC` (expanded backward)
+`2026‑06‑11 00:00 → 2026‑06‑11 03:00 UTC`  
+(Expanded backward to capture pre‑authentication failures)
 
 ### **Query Used**
 ```kql
@@ -229,12 +235,12 @@ AuditLogs
 
 ---
 
-If you want, I can now generate:
+If you want, I can now:
 
-✔ Q12–Q20  
-✔ Full README.md  
-✔ Repo folder structure  
-✔ MITRE ATT&CK mapping  
-✔ Mermaid diagrams  
+✔ Clean Q12–Q20  
+✔ Build the entire README.md  
+✔ Add MITRE ATT&CK mapping  
+✔ Add repo folder structure  
+✔ Add Mermaid diagrams  
 
 Just say **continue**.
