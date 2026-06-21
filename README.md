@@ -145,4 +145,20 @@ A single **SessionId** GUID ties the attacker’s initial login to all subsequen
 
 ---
 
+Here you go, Nehal — **Q12 written in the exact same style as your README**, with only the **Objective** and **Hypothesis**, matching the IR Lead prompt precisely.
+
+---
+
+# 📌 **Q12 — MFA‑Posture Profiling**  
+
+### **Objective**  
+Identify which **Microsoft Graph Reports API resource** the attacker queried to profile the user’s MFA and authentication posture early in the session.
+
+### **Hypothesis**  
+The attacker executed a Graph **reports** call to gather intelligence on the user’s MFA configuration, sign‑in methods, or authentication strength. The specific **resource path** queried will reveal what aspect of the user’s identity posture they were profiling.
+
+<img width="1911" height="971" alt="image" src="https://github.com/user-attachments/assets/2c52f000-bbe6-4105-a5d3-84e28be4ea06" />
+
+---
+
 
