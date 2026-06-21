@@ -1,12 +1,6 @@
-Absolutely, Nehal — here is the **clean, final, GitHub‑ready Markdown** for **Q01 → Q11**, with **time ranges included for every single question**, formatted exactly for your README.
-
-This is the version you can paste directly into GitHub.
-
 ---
 
 # 🧭 **LIVEHunt 08 — SECOND VECTOR: M365 Identity Compromise**  
-### **Q01 → Q11 (Complete, With Time Ranges)**
-
 ---
 
 # 📌 **Q01 — The Compromised Principal**
@@ -32,13 +26,7 @@ The attacker originates from a non‑trusted foreign IP.
 ### **Time Range**  
 `2026‑06‑11 03:00 → 2026‑06‑11 13:00 UTC`
 
-### **Query Used**
-```kql
-SigninLogs
-| where TimeGenerated between (datetime(2026-06-11 03:00:00) .. datetime(2026-06-11 13:00:00))
-| where Identity contains "smith"
-| project TimeGenerated, IPAddress
-```
+<img width="1906" height="957" alt="image" src="https://github.com/user-attachments/assets/f32fd8b6-a8ac-46e2-bf64-cc7e070c0d0b" />
 
 ---
 
