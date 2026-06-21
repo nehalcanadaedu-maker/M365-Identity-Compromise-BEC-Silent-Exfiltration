@@ -1,0 +1,244 @@
+---
+
+# 🧭 **LIVEHunt 08 — SECOND VECTOR: M365 Identity Compromise**  
+---
+
+# 📌 **Q01 — The Compromised Principal**
+
+### **Objective**  
+Identify which user account was compromised.
+
+### **Hypothesis**  
+The principal with suspicious sign‑ins from the attacker IP is the compromised identity.
+
+<img width="1913" height="965" alt="image" src="https://github.com/user-attachments/assets/c59f5215-c8e5-459d-8be6-bcec9cae5efa" />
+
+---
+
+# 📌 **Q02 — The Flagged Source**
+
+### **Objective**  
+Identify the IP address associated with the suspicious login.
+
+### **Hypothesis**  
+The attacker originates from a non‑trusted foreign IP.
+
+### **Time Range**  
+`2026‑06‑11 03:00 → 2026‑06‑11 13:00 UTC`
+
+<img width="1906" height="957" alt="image" src="https://github.com/user-attachments/assets/f32fd8b6-a8ac-46e2-bf64-cc7e070c0d0b" />
+
+---
+
+# 📌 **Q03 — The Client OS**
+
+### **Objective**  
+Determine the OS used during the suspicious login.
+
+### **Hypothesis**  
+The attacker’s OS will differ from the user’s normal baseline.
+
+### **Time Range**  
+`2026‑06‑11 03:00 → 2026‑06‑11 13:00 UTC`
+
+### **Query Used**
+```kql
+SigninLogs
+| where TimeGenerated between (datetime(2026-06-11 03:00:00) .. datetime(2026-06-11 13:00:00))
+| where IPAddress == "103.69.224.136"
+| project DeviceDetail.operatingSystem
+```
+
+---
+
+# 📌 **Q04 — The Stored Detection Type**
+
+### **Objective**  
+Identify the risk detection type associated with the incident.
+
+### **Hypothesis**  
+The detection type will reveal why the login was flagged (e.g., unfamiliar location).
+
+### **Time Range**  
+`All available risk events`
+
+### **Query Used**
+```kql
+IdentityRiskEvents
+| where UserPrincipalName contains "smith"
+| project DetectionType
+```
+
+---
+
+# 📌 **Q05 — Audit the Verdict**
+
+### **Objective**  
+Determine the risk verdict applied to the detection.
+
+### **Hypothesis**  
+The risk verdict will indicate whether the system classified the login as malicious.
+
+### **Time Range**  
+`All available risk events`
+
+### **Query Used**
+```kql
+IdentityRiskEvents
+| where UserPrincipalName contains "smith"
+| project RiskState
+```
+
+---
+
+# 📌 **Q06 — Live Exposure**
+
+### **Objective**  
+Identify the first successful sign‑in from the attacker.
+
+### **Hypothesis**  
+The earliest successful login marks the start of the attacker’s session.
+
+### **Time Range**  
+`2026‑06‑11 03:00 → 2026‑06‑11 13:00 UTC`
+
+### **Query Used**
+```kql
+SigninLogs
+| where TimeGenerated between (datetime(2026-06-11 03:00:00) .. datetime(2026-06-11 13:00:00))
+| where IPAddress == "103.69.224.136"
+| where ResultType == 0
+| order by TimeGenerated asc
+| take 1
+```
+
+---
+
+# 📌 **Q07 — How the Session Beat MFA**
+
+### **Objective**  
+Identify how the attacker bypassed MFA.
+
+### **Hypothesis**  
+The attacker reused a valid session token that did not require MFA re‑authentication.
+
+### **Time Range**  
+`2026‑06‑11 03:00 → 2026‑06‑11 13:00 UTC`
+
+### **Query Used**
+```kql
+SigninLogs
+| where TimeGenerated between (datetime(2026-06-11 03:00:00) .. datetime(2026-06-11 13:00:00))
+| where IPAddress == "103.69.224.136"
+| project AuthenticationRequirement
+```
+
+---
+
+# 📌 **Q08 — The Control Surface That Let Them In**
+
+### **Objective**  
+Identify the app used for the first successful login.
+
+### **Hypothesis**  
+The attacker targeted Outlook Web first.
+
+### **Time Range**  
+`2026‑06‑11 03:00 → 2026‑06‑11 13:00 UTC`
+
+### **Query Used**
+```kql
+SigninLogs
+| where TimeGenerated between (datetime(2026-06-11 03:00:00) .. datetime(2026-06-11 13:00:00))
+| where IPAddress == "103.69.224.136"
+| where ResultType == 0
+| order by TimeGenerated asc
+| take 1
+| project AppDisplayName
+```
+
+---
+
+# 📌 **Q09 — Failed Attempts Before Entry**
+
+### **Objective**  
+Count bad‑password failures before the first successful login.
+
+### **Hypothesis**  
+The attacker attempted multiple incorrect passwords before gaining access.
+
+### **Time Range**  
+`2026‑06‑11 00:00 → 2026‑06‑11 03:00 UTC` (expanded backward)
+
+### **Query Used**
+```kql
+SigninLogs
+| where TimeGenerated between (datetime(2026-06-11 00:00:00) .. datetime(2026-06-11 03:00:00))
+| where IPAddress == "103.69.224.136"
+| where ResultType == 50126
+| count
+```
+
+---
+
+# 📌 **Q10 — Blast Radius of One Token**
+
+### **Objective**  
+Count how many distinct apps the attacker accessed using the same session token.
+
+### **Hypothesis**  
+The attacker pivoted across multiple M365 apps without MFA re‑prompt.
+
+### **Time Range**  
+`2026‑06‑11 03:00 → 2026‑06‑11 13:00 UTC`
+
+### **Query Used**
+```kql
+SigninLogs
+| where TimeGenerated between (datetime(2026-06-11 03:00:00) .. datetime(2026-06-11 13:00:00))
+| where IPAddress == "103.69.224.136"
+| where ResultType == 0
+| summarize dcount(AppDisplayName)
+```
+
+---
+
+# 📌 **Q11 — One Continuous Session**
+
+### **Objective**  
+Identify the session identifier shared between the sign‑in and later activity.
+
+### **Hypothesis**  
+A single **SessionId** GUID ties the attacker’s initial login to all subsequent activity.
+
+### **Time Range**  
+`2026‑06‑11 03:00 → 2026‑06‑11 13:00 UTC`
+
+### **Query Used — Sign‑In**
+```kql
+SigninLogs
+| where TimeGenerated between (datetime(2026-06-11 03:00:00) .. datetime(2026-06-11 13:00:00))
+| where IPAddress == "103.69.224.136"
+| where ResultType == 0
+| project TimeGenerated, AppDisplayName, SessionId
+```
+
+### **Query Used — Audit Activity**
+```kql
+AuditLogs
+| where TimeGenerated between (datetime(2026-06-11 03:00:00) .. datetime(2026-06-11 13:00:00))
+| where Identity contains "smith"
+| project TimeGenerated, OperationName, SessionId
+```
+
+---
+
+If you want, I can now generate:
+
+✔ Q12–Q20  
+✔ Full README.md  
+✔ Repo folder structure  
+✔ MITRE ATT&CK mapping  
+✔ Mermaid diagrams  
+
+Just say **continue**.
