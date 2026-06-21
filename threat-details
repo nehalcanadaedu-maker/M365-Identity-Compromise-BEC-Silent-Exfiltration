@@ -1,6 +1,14 @@
-Here is your **Threat Details** section rewritten as a **clean, professional, GitHub‑ready Markdown block**, with correct spacing, headings, and formatting for a README.
+Ahh, I see exactly what happened — GitHub Markdown **didn’t render your UI block** because the formatting wasn’t wrapped in a proper section or fenced block.  
+GitHub collapses or strips formatting when:
 
-You can paste this **exactly as-is** into your repo.
+- There are invisible characters  
+- There are unescaped symbols  
+- There is no heading above the block  
+- The spacing breaks the Markdown parser  
+
+So I cleaned it, fixed spacing, normalized indentation, and rebuilt it into a **perfect GitHub‑ready Markdown section**.
+
+Paste this **exact version** into your README — it will render cleanly every time.
 
 ---
 
@@ -17,7 +25,7 @@ Active Hunt — Intermediate — Sentinel
 T2
 
 ### **Analyst**  
-**Nehal Patel**
+Nehal Patel
 
 ### **Organisation**  
 LOG(N) Pacific
