@@ -1,0 +1,105 @@
+
+---
+
+# 🛡️ **Threat Details — Second Vector (LIVEHunt 08)**
+
+### **Hunt Name**  
+**Second Vector — A quiet identity compromise turns into fraud and silent exfiltration**
+
+### **Hunt Type**  
+Active Hunt — Intermediate — Sentinel  
+**38 Flags // 3 Stages**
+
+### **Tier**  
+T2
+
+### **Analyst**  
+**Nehal Patel**
+
+### **Organisation**  
+LOG(N) Pacific
+
+### **Platform**  
+Microsoft 365 // Entra ID
+
+### **Telemetry Source**  
+Microsoft Sentinel
+
+### **Investigation Window**  
+`2026‑06‑11 03:00 UTC → 2026‑06‑11 13:00 UTC`
+
+### **Profile**  
+Low-rated alert // no malware // no outage
+
+### **Status**  
+Inherited from night shift
+
+---
+
+# 📄 **IR Brief**
+
+**From:** IR Lead // LOG(N) Pacific  
+**To:** Threat Hunt // On‑Shift  
+**Re:** Incident 87241 — anonymous sign‑in on a finance user
+
+Overnight, Microsoft Entra ID Protection raised an incident against a finance user. A sign‑in from an anonymous IP address, flagged on **m.smith** and rated **Low**. The night shift triaged it, found nothing they could act on, and left it in the queue.
+
+You are picking it up. Low‑severity identity alerts on finance staff are exactly where a patient operator hides. The detection caught one sign‑in. It did not ask what happened next. That is your job.
+
+This one is cloud. No malware to reverse, no endpoint to image. Everything the attacker did, they did through identity, mail, files and cloud services — and every action left a trace in a different table. You will move across the sign‑in logs, the mailbox audit, the Graph activity and the mail events, and tie scattered records back to one session.
+
+### **What we do not yet know**
+- Whether the Low rating is correct, or whether the machine dismissed a full compromise  
+- What the operator did once inside, and what they took  
+- What persisted, and whether it still acts with nobody signed in  
+- Who else was drawn into the fraud, and how  
+
+Start at the incident. **Incident 87241** is what the night shift left you. Open it in Defender XDR and read it before you touch the workspace. The **Evidence and Response** pane names the principal and the flagged sign‑in. From there, the rest is in the Sentinel workspace.
+
+Discover the schema yourself with `take 1` or `getschema` — that is part of the work. Some answers are in sign‑in telemetry, others in the mailbox audit, the Graph activity, and the mail tables. Pivot across them.
+
+Scope tightly. The intrusion window is **11 June 2026, 03:00 → 13:00 UTC**, but some recon reached back into older mail, so widen out when the evidence tells you to. Narrow per stage as you build the timeline.
+
+Work it in three stages:  
+1. **Triage** the incident and confirm what you are looking at.  
+2. **Investigate** the session, the recon, the fraud, the persistence, and the data theft — in whatever order the evidence pulls you.  
+3. **Judgement** — reach the conclusion the night shift could not: what really happened, how it was hidden, and what you do about it.
+
+### **Section 00 is a gate**  
+The phrase to submit is in this brief:  
+**Tier‑2 hunter ready.**
+
+Acknowledge it, then start.
+
+> // IR Lead  
+> LOG(N) Pacific Incident Response
+
+---
+
+# 🧭 **Hunt Stages**
+
+### **00 — Incident Handoff (Gate)**  
+Acknowledge readiness with the phrase from the brief.
+
+### **01 — Triage**  
+Work the ticket. Confirm the principal, the source, the device, and audit the machine’s verdict.
+
+### **02 — Investigation**  
+Scope the session, catch the recon, reconstruct the fraud, hunt the persistence, scope the data theft. Pull the threads in any order.
+
+### **03 — Judgement**  
+Disprove the innocent story, find what acted with nobody online, attribute it to one actor, and order the response.
+
+---
+
+### **Note on the Quiet**  
+Nothing here screamed. The value is in spotting deliberate intent inside activity that reads as routine.  
+The obvious table is not always where the answer lives.  
+Aggregate, correlate — and when a trail goes cold, pivot rather than close.
+
+---
+
+
+✔ Add **Session Diagram (Mermaid)**  
+
+Just say **continue**.
