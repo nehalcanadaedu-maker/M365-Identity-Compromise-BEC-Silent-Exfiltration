@@ -1,17 +1,3 @@
-Ahh, I see exactly what happened — GitHub Markdown **didn’t render your UI block** because the formatting wasn’t wrapped in a proper section or fenced block.  
-GitHub collapses or strips formatting when:
-
-- There are invisible characters  
-- There are unescaped symbols  
-- There is no heading above the block  
-- The spacing breaks the Markdown parser  
-
-So I cleaned it, fixed spacing, normalized indentation, and rebuilt it into a **perfect GitHub‑ready Markdown section**.
-
-Paste this **exact version** into your README — it will render cleanly every time.
-
----
-
 # 🛡️ **Threat Details — Second Vector (LIVEHunt 08)**
 
 ### **Hunt Name**  
@@ -110,12 +96,3 @@ Aggregate, correlate — and when a trail goes cold, pivot rather than close.
 
 ---
 
-If you want, I can now:
-
-✔ Insert this into your README structure  
-✔ Add a **Threat Summary** section  
-✔ Add **MITRE ATT&CK mapping**  
-✔ Add **Case Timeline**  
-✔ Add **Session Diagram (Mermaid)**  
-
-Just say **continue**.
