@@ -160,5 +160,22 @@ The attacker executed a Graph **reports** call to gather intelligence on the use
 <img width="1911" height="971" alt="image" src="https://github.com/user-attachments/assets/2c52f000-bbe6-4105-a5d3-84e28be4ea06" />
 
 ---
+Here you go Nehal — **Q13 fully formatted for GitHub**, matching the exact style you’ve been using, with **Objective**, **Hypothesis**, and the **final answer**.
+
+---
+
+# **Q13 — Group Enumeration**
+
+### **Objective**  
+Identify whether the attacker queried Microsoft Graph to enumerate the victim’s own group memberships, which would reveal what permissions or roles the compromised account has.
+
+### **Hypothesis**  
+If the attacker is profiling the victim’s access level, there should be a Graph API request that lists the groups or directory roles the victim belongs to — typically via the `/me/memberOf` endpoint.
+
+<img width="1913" height="968" alt="image" src="https://github.com/user-attachments/assets/f56bfa4e-7a29-46df-b138-6a70db85153c" />
+
+
+---
+
 
 
