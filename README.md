@@ -23,7 +23,7 @@ Identify the IP address associated with the suspicious login.
 ### **Hypothesis**  
 The attacker originates from a non‑trusted foreign IP.
 
-<img width="1906" height="957" alt="image" src="https://github.com/user-attachments/assets/f32fd8b6-a8ac-46e2-bf64-cc7e070c0d0b" />
+<img width="1092" height="628" alt="image" src="https://github.com/user-attachments/assets/31097e5b-d038-465f-8a32-616508525cf7" />
 
 ---
 
