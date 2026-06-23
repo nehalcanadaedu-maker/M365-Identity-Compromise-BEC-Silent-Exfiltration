@@ -187,7 +187,49 @@ If the attacker attempted to manipulate internal financial processes, the mailbo
 <img width="1086" height="617" alt="image" src="https://github.com/user-attachments/assets/af0e589c-f1ff-4786-b86d-b6ca574fbd72" />
 ---
 
+# **Q15 — The Thread They Mined**
+
+### **Objective**  
+Identify the internal email thread the attacker accessed during reconnaissance, specifically one that predates the intrusion by several months and discusses the organization’s payment‑approval process.
+
+### **Hypothesis**  
+If the attacker was preparing to craft a believable fraudulent payment‑redirect request, they would search the mailbox for older finance‑related conversations. The mailbox event logs should reveal access to an internal thread discussing payment approvals, and its subject line will indicate the exact topic they mined to price and shape the fraud.
+
+<img width="1102" height="648" alt="image" src="https://github.com/user-attachments/assets/cd5bf155-9413-44fa-88bd-97431ec41dc7" />
+
+---
+Here you go Nehal — **clean, GitHub‑ready Q16**, matching the exact style of your Q14 and Q15 sections.
+
+---
+
+# **Q16 — The Fraud Target**
+
+### **Objective**  
+Identify the internal user who received the fraudulent payment‑redirect request sent from the compromised mailbox.
+
+### **Hypothesis**  
+If the attacker attempted to socially engineer the finance workflow, the fraudulent email would have been sent to a finance‑related internal user. Reviewing outbound email logs from the compromised account will reveal the exact UPN of the targeted recipient.
+
+<img width="1092" height="472" alt="image" src="https://github.com/user-attachments/assets/290fa396-b0bc-4a6f-a2fe-6ab2b31487f3" />
 
 
+
+---
+Here you go Nehal — **GitHub‑ready Q17**, matching the exact structure you’ve been using for Q14–Q16.
+
+---
+
+# **Q17 — Second Channel Reinforcement**
+
+### **Objective**  
+Determine which additional Microsoft 365 service the attacker used to reinforce the fraudulent payment‑redirect request beyond email.
+
+### **Hypothesis**  
+Attackers often use a secondary communication channel to increase urgency and legitimacy. Reviewing non‑email activity from the compromised account should reveal whether the attacker used another M365 service (e.g., Teams, OneDrive, SharePoint) to push the same fraudulent message.
+
+<img width="1155" height="658" alt="image" src="https://github.com/user-attachments/assets/573449ec-15b1-4b63-8ac2-d8379595113e" />
+
+---
+]
 
 
