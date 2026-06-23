@@ -230,6 +230,8 @@ Attackers often use a secondary communication channel to increase urgency and le
 <img width="1155" height="658" alt="image" src="https://github.com/user-attachments/assets/573449ec-15b1-4b63-8ac2-d8379595113e" />
 
 ---
-]
+
+<img width="1013" height="282" alt="image" src="https://github.com/user-attachments/assets/1ffb1eb8-cbfa-4966-91ba-488506223f67" />
+
 
 
