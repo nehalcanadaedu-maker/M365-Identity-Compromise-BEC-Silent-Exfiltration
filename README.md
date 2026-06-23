@@ -61,7 +61,7 @@ Determine the final disposition (verdict) of all risk detections associated with
 ### **Hypothesis**  
 The user has multiple risk detections, and aggregating them by **RiskState** will reveal the most common outcome (e.g., *atRisk*, *remediated*, *dismissed*).
 
-<img width="1917" height="873" alt="Screenshot 2026-06-20 201510" src="https://github.com/user-attachments/assets/9d4471da-d96c-4dc5-b141-0a06d380bd8e" />
+<img width="1062" height="542" alt="image" src="https://github.com/user-attachments/assets/55fb68c2-ffba-4abb-9100-042ea63cab52" />
 
 ---
 
