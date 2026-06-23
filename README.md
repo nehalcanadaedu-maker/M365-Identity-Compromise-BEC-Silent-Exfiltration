@@ -35,7 +35,7 @@ Determine the OS used during the suspicious login.
 ### **Hypothesis**  
 The attacker’s OS will differ from the user’s normal baseline.
 
-<img width="1913" height="967" alt="image" src="https://github.com/user-attachments/assets/fe344532-a698-4496-a31b-ab696a4476ed" />
+<img width="1241" height="695" alt="image" src="https://github.com/user-attachments/assets/12990d13-ae67-4832-8d45-92b2aeb363eb" />
 
 
 ---
