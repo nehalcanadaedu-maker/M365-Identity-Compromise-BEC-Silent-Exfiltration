@@ -174,8 +174,20 @@ If the attacker is profiling the victim’s access level, there should be a Grap
 
 <img width="1910" height="961" alt="image" src="https://github.com/user-attachments/assets/85d42263-07f9-40b9-b382-045d501edc6e" />
 
-
 ---
+
+# **Q14 — The Fraudulent Request**
+
+### **Objective**  
+Identify the internal fraudulent email sent from the compromised mailbox by extracting the **exact subject line** used to redirect a legitimate payment.
+
+### **Hypothesis**  
+If the attacker attempted to manipulate internal financial processes, the mailbox logs will contain an outbound internal email with a subject line referencing updated banking, payment changes, or invoice redirection — revealing the attacker’s intent and confirming fraudulent activity.
+
+<img width="1086" height="617" alt="image" src="https://github.com/user-attachments/assets/af0e589c-f1ff-4786-b86d-b6ca574fbd72" />
+---
+
+
 
 
 
