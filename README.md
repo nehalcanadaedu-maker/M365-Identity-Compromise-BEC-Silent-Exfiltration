@@ -11,7 +11,7 @@ Identify which user account was compromised.
 ### **Hypothesis**  
 The principal with suspicious sign‑ins from the attacker IP is the compromised identity.
 
-<img width="1913" height="965" alt="image" src="https://github.com/user-attachments/assets/c59f5215-c8e5-459d-8be6-bcec9cae5efa" />
+<img width="927" height="396" alt="image" src="https://github.com/user-attachments/assets/7edbce94-c2ae-4cbc-84d4-15493520b1de" />
 
 ---
 
