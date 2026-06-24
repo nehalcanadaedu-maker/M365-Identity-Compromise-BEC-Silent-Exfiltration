@@ -88,7 +88,9 @@ SigninLogs
 | where IPAddress == "103.69.224.136"
 | where UserPrincipalName contains "smith"
 | project TimeGenerated,UserPrincipalName
+| take 1
 ```
+<img width="1048" height="222" alt="image" src="https://github.com/user-attachments/assets/94f2baaf-0545-4d57-a479-40cc7dbbf143" />
 
 **Evidence Collected:** `m.smith@lognpacific.org`
 **Final Finding:** The compromised principal was `m.smith@lognpacific.org`.
@@ -108,7 +110,9 @@ SigninLogs
 | where IPAddress == "103.69.224.136"
 | where UserPrincipalName contains "smith"
 | project TimeGenerated,UserPrincipalName,IPAddress
+| take 1
 ```
+<img width="1007" height="237" alt="image" src="https://github.com/user-attachments/assets/e07d438c-c03e-445d-91af-d8f79948dd9b" />
 
 **Evidence Collected:** `103.69.224.136`
 **Final Finding:** The flagged sign-in originated from `103.69.224.136`.
@@ -128,7 +132,9 @@ SigninLogs
 | where IPAddress == "103.69.224.136"
 | where UserPrincipalName contains "smith"
 | project TimeGenerated,UserPrincipalName,DeviceDetail
+| take 1
 ```
+<img width="1012" height="245" alt="image" src="https://github.com/user-attachments/assets/2f356c81-af1f-4016-bb8c-4f83ea918ee9" />
 
 **Evidence Collected:** `Linux`, `Chrome 149.0.0`, unmanaged and non-compliant device.
 **Final Finding:** The suspicious session used a Linux client.
@@ -147,7 +153,9 @@ AADUserRiskEvents
 | where UserDisplayName contains "smith"
 | where TimeGenerated between (datetime(2026-06-11 03:00:00) .. datetime(2026-06-11 13:00:00))
 | project TimeGenerated,UserDisplayName,RiskEventType
+| take 1
 ```
+<img width="993" height="237" alt="image" src="https://github.com/user-attachments/assets/9878ab31-3ffa-4568-b186-f25f9b69797f" />
 
 **Evidence Collected:** `anonymizedIPAddress`
 **Final Finding:** The stored detection type was `anonymizedIPAddress`.
@@ -166,7 +174,9 @@ AADUserRiskEvents
 | where UserDisplayName contains "smith"
 | where TimeGenerated between (datetime(2026-06-11 03:00:00) .. datetime(2026-06-11 13:00:00))
 | summarize count() by RiskState
+| take 1
 ```
+<img width="947" height="197" alt="image" src="https://github.com/user-attachments/assets/46e41906-a728-45a9-9097-9fffe2459198" />
 
 **Evidence Collected:** `dismissed`, count `5`
 **Final Finding:** Most risk detections ended in the `dismissed` state.
@@ -183,6 +193,8 @@ AADUserRiskEvents
 ```text
 Microsoft Defender Portal → Incidents & Alerts → Incidents → Select Incident 87241 → Assets → Users
 ```
+<img width="952" height="352" alt="image" src="https://github.com/user-attachments/assets/e950c0bc-f2c6-4c76-95c6-673c76afd7fa" />
+
 
 **Evidence Collected:** Account status reviewed in Defender XDR.
 **Final Finding:** The account status was verified from the Defender XDR incident asset record.
@@ -202,7 +214,9 @@ SigninLogs
 | where TimeGenerated between (datetime(2026-06-11 03:00:00) .. datetime(2026-06-11 13:00:00))
 | where ResultType == 0
 | project TimeGenerated,UserDisplayName,AuthenticationRequirement
+| take 1
 ```
+<img width="957" height="238" alt="image" src="https://github.com/user-attachments/assets/409c1422-fd0a-4d71-afc3-903e907a722c" />
 
 **Evidence Collected:** `singleFactorAuthentication`
 **Final Finding:** The suspicious session succeeded using single-factor authentication.
@@ -223,7 +237,9 @@ SigninLogs
 | where ResultType != 0
 | order by TimeGenerated asc
 | project TimeGenerated, ResultType, AppDisplayName
+| take 1
 ```
+<img width="958" height="233" alt="image" src="https://github.com/user-attachments/assets/27f7ae17-b999-4405-b732-20ed0b1e05fd" />
 
 **Evidence Collected:** `One Outlook Web`
 **Final Finding:** The application surface identified was `One Outlook Web`.
@@ -246,6 +262,7 @@ SigninLogs
 | order by TimeGenerated asc
 | count
 ```
+<img width="888" height="147" alt="image" src="https://github.com/user-attachments/assets/174493df-ce31-4db4-bb44-038bf5c46e10" />
 
 **Evidence Collected:** `2` bad-password failures.
 **Final Finding:** There were 2 bad-password failures before successful activity.
@@ -268,6 +285,7 @@ SigninLogs
 | distinct AppDisplayName
 | count
 ```
+<img width="880" height="163" alt="image" src="https://github.com/user-attachments/assets/a80f5800-2952-439c-94a4-60b4c6c3a5d5" />
 
 **Evidence Collected:** `7` distinct applications.
 **Final Finding:** The session accessed 7 distinct apps.
@@ -288,7 +306,10 @@ SigninLogs
 | where TimeGenerated between (datetime(2026-06-11 03:00:00) .. datetime(2026-06-11 13:00:00))
 | where ResultType == 0
 | project TimeGenerated,SessionId,UserDisplayName
+| take 1
 ```
+<img width="957" height="242" alt="image" src="https://github.com/user-attachments/assets/e72c11cf-9196-4ace-a5a6-0b1e47854642" />
+
 
 **Evidence Collected:** `005d431a-380b-1f5e-e554-16d5010dc28e`
 **Final Finding:** The session identifier was `005d431a-380b-1f5e-e554-16d5010dc28e`.
@@ -308,7 +329,9 @@ MicrosoftGraphActivityLogs
 | where RequestUri has "/reports/"
 | project TimeGenerated, RequestUri
 | order by TimeGenerated asc
+| take 1
 ```
+<img width="1340" height="235" alt="image" src="https://github.com/user-attachments/assets/cf5bbe36-525a-4f18-b3c6-91fef685341a" />
 
 **Evidence Collected:** `userRegistrationDetails`
 **Final Finding:** The attacker queried `userRegistrationDetails`.
@@ -329,6 +352,7 @@ MicrosoftGraphActivityLogs
 | project TimeGenerated, RequestUri
 | order by TimeGenerated asc
 ```
+<img width="972" height="216" alt="image" src="https://github.com/user-attachments/assets/f69af3d7-62b9-4f1f-bcd3-ff04656b8ff6" />
 
 **Evidence Collected:** `/me/memberOf`
 **Final Finding:** The attacker enumerated group membership using `/me/memberOf`.
@@ -349,7 +373,9 @@ EmailEvents
 | where Subject has_any ("bank", "payment", "invoice", "details", "update", "account")
 | project TimeGenerated, SenderFromAddress, RecipientEmailAddress, Subject
 | order by TimeGenerated asc
+| take 1
 ```
+<img width="1306" height="282" alt="image" src="https://github.com/user-attachments/assets/bb8916e7-a12a-4e92-b4b1-6725f3f92c81" />
 
 **Evidence Collected:** `Updated Banking Details - Pacific IT Monthly`
 **Final Finding:** The fraudulent email subject was `Updated Banking Details - Pacific IT Monthly`.
@@ -370,7 +396,10 @@ EmailEvents
 | where Subject has_any ("bank", "payment", "invoice", "details", "update", "account")
 | project TimeGenerated, SenderFromAddress, RecipientEmailAddress, Subject
 | order by TimeGenerated asc
+| take 1
 ```
+<img width="1236" height="276" alt="image" src="https://github.com/user-attachments/assets/6d23e4c5-0b0e-40ad-8d7c-55b717128448" />
+
 
 **Evidence Collected:** `Re: Q1 Vendor Payment Schedule - Review Required`
 **Final Finding:** The attacker mined the older payment thread `Re: Q1 Vendor Payment Schedule - Review Required`.
@@ -392,6 +421,8 @@ EmailEvents
 | project TimeGenerated, SenderFromAddress, RecipientEmailAddress, Subject
 | order by TimeGenerated asc
 ```
+<img width="1211" height="275" alt="image" src="https://github.com/user-attachments/assets/ef5a42b2-c82e-4717-929f-80cfcac22c86" />
+
 
 **Evidence Collected:** `j.reynolds@lognpacific.org`
 **Final Finding:** The fraud target was `j.reynolds@lognpacific.org`.
@@ -412,6 +443,7 @@ CloudAppEvents
 | where ActionType contains "sent"
 | project TimeGenerated, ActionType, Application
 ```
+<img width="1033" height="237" alt="image" src="https://github.com/user-attachments/assets/f8ebeafa-bd78-45c0-b717-7e706ac069fb" />
 
 **Evidence Collected:** `Microsoft Teams`
 **Final Finding:** The attacker reinforced the request through Microsoft Teams.
@@ -431,7 +463,9 @@ OfficeActivity
 | where UserId contains "smith"
 | where Operation contains "rule"
 | project TimeGenerated,Operation,Parameters
+| take 1
 ```
+<img width="1332" height="422" alt="image" src="https://github.com/user-attachments/assets/97bd6548-598a-41fd-a38c-1153d1c4c499" />
 
 **Evidence Collected:** Rule name `Invoice Processing`; messages from `j.reynolds@lognpacific.org` moved to `Archive`.
 **Final Finding:** The concealment rule was named `Invoice Processing`.
@@ -442,12 +476,6 @@ OfficeActivity
 
 **Objective:** Explain why the attacker moved mail instead of deleting it.
 **Hypothesis:** Moving mail is quieter and less suspicious than deleting it.
-
-**Query / Method Used:**
-
-```text
-Analyst review of mailbox rule parameters from OfficeActivity.
-```
 
 **Evidence Collected:** Mail was moved to the normal-looking `Archive` folder.
 **Final Finding:** Moving mail avoided suspicion while hiding replies from the user’s inbox.
