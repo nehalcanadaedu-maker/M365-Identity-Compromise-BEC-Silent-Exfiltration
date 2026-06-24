@@ -16,8 +16,8 @@
 | Tier                  | T2                                                        |
 | Analyst               | Nehal Patel                                               |
 | Organisation          | LOG(N) Pacific                                            |
-| Platform              | Microsoft 365 / Entra ID                                  |
-| Telemetry Source      | Microsoft Sentinel                                        |
+| Platform              | Microsoft Sentinel|
+| Telemetry Source      | Microsoft 365 / Entra ID  / Defender XDR                                      |
 | Investigation Window  | 2026-06-11 03:00 UTC to 2026-06-11 13:00 UTC              |
 | Initial Severity      | Low                                                       |
 | Final Severity        | High                                                      |
