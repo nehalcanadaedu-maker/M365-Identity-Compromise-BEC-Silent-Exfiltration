@@ -496,6 +496,10 @@ OfficeActivity
 | where Operation contains "rule"
 | project TimeGenerated,Operation,Parameters
 ```
+<img width="1017" height="302" alt="image" src="https://github.com/user-attachments/assets/56ffc3f2-5761-45a0-9ba5-48621324cd15" />
+
+
+
 
 **Evidence Collected:** `merovingian1337@proton.me`
 **Final Finding:** Selected mail was forwarded externally to `merovingian1337@proton.me`.
@@ -506,12 +510,6 @@ OfficeActivity
 
 **Objective:** Explain why both mailbox rules targeted the same sender.
 **Hypothesis:** The rules were designed to suppress replies from the fraud target.
-
-**Query / Method Used:**
-
-```text
-Analyst correlation between the fraud recipient in EmailEvents and mailbox rule parameters in OfficeActivity.
-```
 
 **Evidence Collected:** Both rules targeted mail from `j.reynolds@lognpacific.org`.
 **Final Finding:** The rules were created to hide finance replies that could expose the fake payment request.
@@ -533,6 +531,8 @@ CloudAppEvents
 | project TimeGenerated,AccountDisplayName,ActionType
 | order by TimeGenerated asc
 ```
+<img width="817" height="222" alt="image" src="https://github.com/user-attachments/assets/139c1e4d-f8ad-4ec9-ad56-cc4ebb84f414" />
+
 
 **Evidence Collected:** `FileDownloaded`
 **Final Finding:** The exfiltration operation was `FileDownloaded`, showing files were copied out rather than only accessed.
@@ -552,8 +552,9 @@ CloudAppEvents
 | where AccountDisplayName contains "smith"
 | where ActionType contains "download"
 | project TimeGenerated,AccountDisplayName,ActionType
-| order by TimeGenerated asc
+| count
 ```
+<img width="781" height="153" alt="image" src="https://github.com/user-attachments/assets/262f936c-a34d-409f-8979-506470432777" />
 
 **Evidence Collected:** `3` file download events.
 **Final Finding:** The attacker downloaded 3 files, indicating a small and targeted pull rather than mass exfiltration.
@@ -575,6 +576,7 @@ CloudAppEvents
 | project TimeGenerated,AccountDisplayName,ActionType,ObjectName
 | order by TimeGenerated asc
 ```
+<img width="1225" height="266" alt="image" src="https://github.com/user-attachments/assets/a80a8e56-7443-4425-97cf-33a18b9e6971" />
 
 **Evidence Collected:** `VPN-Access-Credentials.txt`
 **Final Finding:** The attacker downloaded `VPN-Access-Credentials.txt`.
@@ -596,6 +598,7 @@ CloudAppEvents
 | project TimeGenerated,AccountDisplayName,ActionType,ObjectName
 | order by TimeGenerated asc
 ```
+<img width="1185" height="278" alt="image" src="https://github.com/user-attachments/assets/91e28f91-43af-48c8-b545-e80fec9040ca" />
 
 **Evidence Collected:** `yomark.pdf`
 **Final Finding:** The attacker accessed `yomark.pdf` but did not download it.
@@ -617,6 +620,7 @@ SigninLogs
 | where ResultSignature contains "SUCCESS"
 | summarize count() by AuthenticationRequirement
 ```
+<img width="786" height="173" alt="image" src="https://github.com/user-attachments/assets/dd7d8b7b-6287-4b80-93ac-efe24a08de60" />
 
 **Evidence Collected:** `0` successful MFA satisfactions.
 **Final Finding:** MFA was satisfied 0 times, disproving the benign VPN explanation.
@@ -636,6 +640,7 @@ SigninLogs
 | where UserPrincipalName contains "smith"
 | distinct AppDisplayName
 ```
+<img width="472" height="303" alt="image" src="https://github.com/user-attachments/assets/c8c5baa6-9e49-40c5-b50d-cc596a73d014" />
 
 **Evidence Collected:** `Microsoft Flow Portal`
 **Final Finding:** The attacker accessed Microsoft Flow Portal.
@@ -656,6 +661,8 @@ MicrosoftGraphActivityLogs
 | project TimeGenerated, RequestUri, IPAddress
 | order by TimeGenerated asc
 ```
+<img width="1361" height="257" alt="image" src="https://github.com/user-attachments/assets/0cbdf1f0-bd03-4663-b25a-98b9496eddc8" />
+
 
 **Evidence Collected:** `MicrosoftGraphActivityLogs`
 **Final Finding:** The forward trigger was recorded in `MicrosoftGraphActivityLogs`.
@@ -678,15 +685,17 @@ MicrosoftGraphActivityLogs
 | order by TimeGenerated asc
 
 // 2. Mail events
-EmailEvents
-| where RecipientEmailAddress =~ "m.smith@lognpacific.org"
-| where SenderFromAddress contains "reynolds"
-| where TimeGenerated between (datetime(2026-06-11T03:00:00Z) .. datetime(2026-06-11T13:00:00Z))
-| where Subject contains "banking"
-| project TimeGenerated, RecipientEmailAddress, SenderFromAddress, Subject
+OfficeActivity
+| where TimeGenerated between (datetime(2026-06-11 03:00:00) .. datetime(2026-06-11 13:00:00))
+| where UserId contains "smith"
+| where Operation contains "rule"
+| project TimeGenerated,Operation,Parameters
 ```
+<img width="1356" height="261" alt="image" src="https://github.com/user-attachments/assets/c1a2fe46-3851-421a-9587-ee9fa5291e09" />
 
-**Evidence Collected:** Mail event at `12:40:49 UTC`; Graph forward call at `12:41:09 UTC`.
+<img width="1391" height="300" alt="image" src="https://github.com/user-attachments/assets/f532475d-44b0-404e-846d-b270fc9eb889" />
+
+**Evidence Collected:** Mail event at 6/11/2026, 3:32:31.000 AM; Graph forward call at `12:41:09 UTC`.
 **Final Finding:** The mail event came first, followed by the Graph forward call.
 
 ---
@@ -705,6 +714,9 @@ MicrosoftGraphActivityLogs
 | project TimeGenerated, RequestUri, IPAddress
 | order by TimeGenerated asc
 ```
+
+<img width="748" height="268" alt="image" src="https://github.com/user-attachments/assets/6c784e01-bef3-412a-8c45-35e0c6784b10" />
+
 
 **Evidence Collected:** `20.150.129.194`
 **Final Finding:** The forward call came from `20.150.129.194`.
@@ -725,6 +737,8 @@ MicrosoftGraphActivityLogs
 | project TimeGenerated, RequestUri, IPAddress, AppId
 | order by TimeGenerated asc
 ```
+<img width="1122" height="303" alt="image" src="https://github.com/user-attachments/assets/2d6a92d4-b93b-4b43-bded-0e48f065445c" />
+
 
 **Evidence Collected:** `7ab7862c-4c57-491e-8a45-d52a7e023983`
 **Final Finding:** The app ID was `7ab7862c-4c57-491e-8a45-d52a7e023983`.
@@ -745,6 +759,7 @@ MicrosoftGraphActivityLogs
 | project TimeGenerated, RequestUri, IPAddress, AppId, UserAgent
 | order by TimeGenerated asc
 ```
+<img width="1225" height="343" alt="image" src="https://github.com/user-attachments/assets/9f0cafa2-da82-4e77-ac87-4d24fa37f768" />
 
 **Evidence Collected:** `azure-logic-apps/1.0`, `microsoft-flow/1.0`
 **Final Finding:** The abused service was Power Automate / Microsoft Flow.
@@ -806,12 +821,6 @@ MicrosoftGraphActivityLogs
 **Objective:** Identify the first action required before deleting rules or flows.
 **Hypothesis:** The attacker could return if active sessions remain valid.
 
-**Query / Method Used:**
-
-```text
-Incident response decision based on active session and token persistence risk.
-```
-
 **Evidence Collected:** Existing sessions and refresh tokens can survive simple cleanup.
 **Final Finding:** Revoke active sessions first.
 
@@ -821,12 +830,6 @@ Incident response decision based on active session and token persistence risk.
 
 **Objective:** Identify where the malicious flow should be removed.
 **Hypothesis:** Sentinel and Exchange rules do not manage Power Automate flows.
-
-**Query / Method Used:**
-
-```text
-Power Platform Admin Center review.
-```
 
 **Evidence Collected:** Power Automate flows are managed through the Power Platform Admin Center.
 **Final Finding:** The flow should be removed from the Power Platform Admin Center.
@@ -838,12 +841,6 @@ Power Platform Admin Center review.
 **Objective:** Determine what Conditional Access did during the suspicious sign-ins.
 **Hypothesis:** A foreign single-factor sign-in should have been blocked or challenged.
 
-**Query / Method Used:**
-
-```text
-SigninLogs were reviewed for Conditional Access results on the suspicious sign-ins.
-```
-
 **Evidence Collected:** `notApplied`
 **Final Finding:** Conditional Access did not apply, which allowed the suspicious single-factor sign-in.
 
@@ -853,12 +850,6 @@ SigninLogs were reviewed for Conditional Access results on the suspicious sign-i
 
 **Objective:** Explain why password reset alone would not fully contain the attacker.
 **Hypothesis:** Active sessions or refresh tokens may remain valid after a password reset.
-
-**Query / Method Used:**
-
-```text
-Incident response decision based on session and refresh token behavior.
-```
 
 **Evidence Collected:** Existing sessions can remain valid unless revoked.
 **Final Finding:** Revoke sessions first to invalidate refresh tokens, then reset the password.
